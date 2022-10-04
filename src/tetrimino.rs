@@ -13,7 +13,7 @@ impl Tetrimino{
 
     pub const fn new(style : TetriminoType) -> Self
     {
-        match kind
+        match style
         {
             TetriminoType::O => Tetrimino
             {
