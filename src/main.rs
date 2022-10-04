@@ -33,6 +33,7 @@ struct GameState
 
 fn main() 
 {
+
     let mut window: PistonWindow =
         WindowSettings::new("Tetrust", [1280,720])
             .exit_on_esc(true)
@@ -62,8 +63,8 @@ fn main()
         fall_counter: 0,
         well: [[0u8;10];24],
         tetrimino_bag: initial_bag,
-        current_tetrimino:first_tetrimino,
-        next_tetrimino:second_tetrimino,
+        current_tetrimino: first_tetrimino,
+        next_tetrimino: second_tetrimino,
         tetrimino_row: 2,
         tetrimino_col: 3
     };
@@ -129,7 +130,18 @@ fn game_update(game_state: &mut GameState)
         {
             copy_to_well(&game_state.current_tetrimino, &mut game_state.well, &mut game_state.tetrimino_row, &mut game_state.tetrimino_col);
 
-           
+            if game_state.tetrimino_bag.is_empty() {game_state.tetrimino_bag = create_random_bag();}
+            game_state.current_tetrimino = game_state.next_tetrimino;
+            game_state.next_tetrimino = game_state.tetrimino_bag.pop().unwrap();
+            
+            game_state.tetrimino_row = 2;
+            game_state.tetrimino_col = 3;
+
+
+            if collision(&game_state.current_tetrimino, &game_state.well, &game_state.tetrimino_row, &game_state.tetrimino_col)
+            {
+                game_state.game_over = true;
+            }
         }
 
         else {game_state.tetrimino_row +=1;}

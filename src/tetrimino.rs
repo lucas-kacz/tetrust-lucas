@@ -1,8 +1,7 @@
-
-#[derive(PartialEq)]
-
+#[derive(PartialEq, Copy, Clone)]
 pub enum TetriminoType {O, I, T, L, J, S, Z}
 
+#[derive(Copy, Clone)]
 pub struct Tetrimino{
     pub style : TetriminoType,
     pub color : [f32;4],
